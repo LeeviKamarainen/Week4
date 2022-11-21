@@ -4,7 +4,6 @@
   <title>Express</title>
   <link rel="stylesheet" href="/stylesheets/materialize.css">
   <script src='/javascripts/main.js'></script>
-  <script type="text/javascript" src="/javascripts/materialize.min.js"></script>
 </head>
 
 <body>
@@ -17,18 +16,20 @@
     <div id = 'recipelist' class="col">
     </div>
 
-    <h4>Name</h4>
-    <input type="text" id="name-text">
-    <h4>Ingredients</h4>
-    <textarea id="ingredients-text"></textarea>
-    <button id="add-ingredient" type="button" class="btn">Add ingredient</button>
-    <h4>instructions</h4>
-    <textarea id="instructions-text"></textarea>
-    <button id="add-instruction" type="button" class="btn">Add instruction</button>
-    <button id="submit" type="submit" class="btn">Submit</button>
-    </br>
-    <input type="file" id = 'image-input' accept="image/*"></input>
-</div>
+    <div class="col">
+      <h4>Name</h4>
+      <input type="text" id="name-text">
+      <h4>Ingredients</h4>
+      <textarea id="ingredients-text"></textarea>
+      <button id="add-ingredient" type="button" class="btn">Add ingredient</button>
+      <h4>instructions</h4>
+      <textarea id="instructions-text"></textarea>
+      <button id="add-instruction" type="button" class="btn">Add instruction</button>
+      <button id="submit" type="submit" class="btn">Submit</button>
+      </br>
+      <input type="file" id = 'image-input' accept="image/*"></input>
+    </div>
+  </div>
   </body>
 
 </html>
