@@ -10,11 +10,19 @@
 <body>
   <nav>
     <div class="nav-wrapper">
+      
       <a href="#" class="brand-logo">Recipe Page</a>
+      <ul class="right hide-on-med-and-down">
+      <li><form>
+        <div class="input-field">
+        <input id = "search" type="search" required>
+    </form></li>
+    </ul>
+    </div>
     </nav>
   </div>
   <div class="container">
-    <div id = 'recipelist' class="col">
+    <div id = 'recipelist' class="collection">
     </div>
 
     <div class="col">
@@ -23,12 +31,16 @@
       <h4>Ingredients</h4>
       <textarea id="ingredients-text"></textarea>
       <button id="add-ingredient" type="button" class="btn">Add ingredient</button>
-      <h4>instructions</h4>
+      <h4>Instructions</h4>
       <textarea id="instructions-text"></textarea>
       <button id="add-instruction" type="button" class="btn">Add instruction</button>
       <button id="submit" type="submit" class="btn">Submit</button>
       </br>
-      <input type="file" id = 'image-input' accept="image/*"></input>
+      <form action="/images" method="post" enctype="multipart/form-data">
+        <input type="file" id = 'camera-file-input' accept="image/*" name="images"></input>
+      </form>
+
+      <ul id="dietcategories" class="collection with-header"><li class="collection-header"><h4>Categories</h4></Categories></li></ul>
     </div>
   </div>
   </body>

@@ -11,20 +11,62 @@ if(document.readyState !== "loading"){
 
 function initializeCode() {
     console.log('Script loaded!')
-    getRecipe();
     addRecipe();
 
-function getRecipe() {
+    let searchField = document.getElementById('search');
+    searchField.addEventListener("keyup", function() {
+        if (event.keyCode === 13) {
+            let searchText = searchField.value;
+            getRecipe(searchText)
+        }
+    })
+    addCategories()
+
+
+function addCategories() {
+    let dietCategories = document.getElementById('dietcategories');
+    fetch('http://localhost:3000/diets/')
+    .then(response => response.json())
+    .then(data => { 
+        for (let index = 0; index < data.length; index++) {
+            
+            var label = document.createElement('label')
+            
+            var span = document.createElement('span')
+            span.innerHTML = data[index].name;
+
+            var iteminput = document.createElement("input");
+            iteminput.type = 'checkbox';
+            iteminput.value = data[index].name;
+            iteminput.id = data[index]._id;
+
+            label.appendChild(iteminput);
+            label.appendChild(span)
+
+            dietCategories.appendChild(label);
+        }
+    })
+
+
+
+}
+
+function getRecipe(name) {
     let recipelist = document.getElementById('recipelist')
-    fetch('http://localhost:3000/recipe/'+'Pizza')
+    recipelist.innerHTML = '';
+    recipelist.className = 'collection'
+    fetch('http://localhost:3000/recipe/'+name)
     .then(response => response.json())
     .then(data => {
         var name = document.createElement('p');
-        name.innerHTML = data.name;
+        name.innerHTML = '<h4>'+data.name+'</h4>';
+        name.className = 'collection-item'
         var ingredientsList = document.createElement('ul')
+        ingredientsList.className = 'collection-item'
         var instructionsList = document.createElement('ul')
-        ingredientsList.innerHTML = 'Ingredients:'
-        instructionsList.innerHTML = 'Ingredients:'
+        instructionsList.className = 'collection-item'
+        ingredientsList.innerHTML = '<h4>Ingredients:</h4>'
+        instructionsList.innerHTML = '<h4>Ingredients:</h4>'
         for (let index = 0; index < data.ingredients.length; index++) {
             var ingredient = document.createElement('li')
             ingredient.innerHTML = data.ingredients[index]
@@ -57,6 +99,9 @@ function getRecipe() {
 
         let instructionList = [];
         let ingredientList = [];
+
+    
+
         addInstruction.addEventListener('click', function() {
             let instruction = instructionsText.value;
             instructionList.push(instruction);
@@ -69,23 +114,45 @@ function getRecipe() {
         })
 
         submitButton.addEventListener('click', function() {
+
+            let dietList = [];
+            
+            let dietCategories = document.getElementById('dietcategories');
+            dietEntries = dietCategories.getElementsByTagName('label')
+            console.log(dietEntries)
+            for (let index = 0; index < dietEntries.length; index++) {
+                
+                if(dietEntries[index].children[0].checked == true) {
+                    console.log(dietEntries[index].children[0].id)
+                    dietList.push(dietEntries[index].children[0].id)
+                }
+                
+            }
+
             let namevalue = nameText.value;
+            let imageID = [];
+
+            let image = document.getElementById('camera-file-input');
+            const formDataImage = new FormData();
+            formDataImage.append('images',image.files[0]);
+            fetch('http://localhost:3000/images', {
+                method: 'POST',
+                data: formDataImage,
+                body: formDataImage,
+                })
+                .then(response => response.json())
+                .then(data => {
+                imageID.push(data.id);
+                });
+            console.log(imageID)
             let recipe = {
                 name: namevalue,
                 instructions: instructionList,
-                ingredients: ingredientList
+                ingredients: ingredientList,
+                categories: dietList,
+                images: imageID
             }
-
-
-            let image = document.getElementById('image-input');
-
-            const formDataImage = new FormData();
-            formDataImage.append('images',image.files[0]);
-            for(let [name, value] of formDataImage) {
-                console.log(`${name} = ${value}`); // key1 = value1, then key2 = value2
-              }
-
-
+            console.log(recipe)
             fetch('http://localhost:3000/recipe/', {
             method: 'POST',
             headers: {
@@ -98,14 +165,7 @@ function getRecipe() {
             console.log(data)
             });
 
-            fetch('http://localhost:3000/images', {
-                method: 'POST',
-                body: formDataImage
-                })
-                .then(response => response)
-                .then(data => {
-                console.log(data)
-                });
+            
         
             ingredientList = [];
             instructionList = [];
