@@ -12,7 +12,6 @@ if(document.readyState !== "loading"){
 function initializeCode() {
     console.log('Script loaded!')
     addRecipe();
-
     let searchField = document.getElementById('search');
     searchField.addEventListener("keyup", function() {
         if (event.keyCode === 13) {

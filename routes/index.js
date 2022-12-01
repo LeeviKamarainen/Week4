@@ -28,7 +28,7 @@ router.get("/recipe/:food", function(req, res, next) {
 })
 
 router.get('/diets/', function(req,res,next) {
-  categories.findOne({name: 'Testinput'}, (err, name) => {
+ /* categories.findOne({name: 'Testinput'}, (err, name) => {
     if(err) return next(err)
     if(!name) { 
       new categories({
@@ -38,7 +38,7 @@ router.get('/diets/', function(req,res,next) {
         if(err) return next(err);
       })
     }
-  })
+  })*/
 
 
   let diets = categories.find({}, function(err, diets){
