@@ -60,7 +60,6 @@ function getRecipe(name) {
     fetch('http://localhost:3000/recipe/'+name)
     .then(response => response.json())
     .then(data => {
-        console.log(data)
         var name = document.createElement('p');
         name.innerHTML = '<h4>'+data.name+'</h4>';
         name.className = 'collection-item'
@@ -85,7 +84,12 @@ function getRecipe(name) {
         recipelist.appendChild(name)
         recipelist.appendChild(ingredientsList)
         recipelist.appendChild(instructionsList)
-
+        imageIDs = data.images;
+        fetch('http://localhost:3000/images/'+imageIDs)
+        .then(response2 => response2.json())
+        .then(data2 => {
+            console.log(data2)
+        })
     })
 
 }
@@ -154,7 +158,8 @@ function getRecipe(name) {
                 .then(response => response.json())
                 .then(data => {
                 imageID.push(data.id);
-                console.log(recipe)
+                console.log(recipe)})
+                .then(data => {
                 fetch('http://localhost:3000/recipe/', {
                     method: 'POST',
                     headers: {

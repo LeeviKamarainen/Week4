@@ -33,15 +33,14 @@ router.get('/diets/', function(req,res,next) {
 
   let diets = categories.find({}, function(err, diets){
     res.json(diets)
-    console.log(diets)
   });
 
 
 })
 
 router.get('/images/:imageId', function(req,res,next) {
-  
-
+  imageIDs = req.id;
+  res.json(imageIDs);
 
 })
 
@@ -53,7 +52,8 @@ router.post('/recipe/', function(req,res,next) {
           name: req.body.name,
           ingredients: req.body.ingredients,
           instructions: req.body.instructions,
-          categories: req.body.categories
+          categories: req.body.categories,
+          images: req.body.images
 
         }).save((err) => {
           if(err) return next(err);
