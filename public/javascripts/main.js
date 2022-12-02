@@ -138,6 +138,14 @@ function getRecipe(name) {
             let image = document.getElementById('image-input');
             const formDataImage = new FormData();
             formDataImage.append('images',image.files[0]);
+            let recipe = {
+                name: namevalue,
+                instructions: instructionList,
+                ingredients: ingredientList,
+                categories: dietList,
+                images: imageID
+            }
+
             fetch('http://localhost:3000/images', {
                 method: 'POST',
                 data: formDataImage,
@@ -146,17 +154,6 @@ function getRecipe(name) {
                 .then(response => response.json())
                 .then(data => {
                 imageID.push(data.id);
-                
-
-
-                let recipe = {
-                    name: namevalue,
-                    instructions: instructionList,
-                    ingredients: ingredientList,
-                    categories: dietList,
-                    images: imageID
-                }
-
                 console.log(recipe)
                 fetch('http://localhost:3000/recipe/', {
                     method: 'POST',
