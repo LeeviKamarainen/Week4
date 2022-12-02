@@ -1,3 +1,4 @@
+
 if(document.readyState !== "loading"){
     console.log("Document is ready");
     initializeCode();
@@ -68,7 +69,7 @@ function getRecipe(name) {
         var instructionsList = document.createElement('ul')
         instructionsList.className = 'collection-item'
         ingredientsList.innerHTML = '<h4>Ingredients:</h4>'
-        instructionsList.innerHTML = '<h4>Ingredients:</h4>'
+        instructionsList.innerHTML = '<h4>Instructions:</h4>'
         for (let index = 0; index < data.ingredients.length; index++) {
             var ingredient = document.createElement('li')
             ingredient.innerHTML = data.ingredients[index]
@@ -85,10 +86,24 @@ function getRecipe(name) {
         recipelist.appendChild(ingredientsList)
         recipelist.appendChild(instructionsList)
         imageIDs = data.images;
-        fetch('http://localhost:3000/images/'+imageIDs)
+        console.log(imageIDs)
+        fetch('http://localhost:3000/images/'+imageIDs, {
+            headers: {
+                'Content-type': 'multipart/form-data',
+                'Content-Disposition': 'inline'
+            },
+        })
         .then(response2 => response2.json())
         .then(data2 => {
-            console.log(data2)
+            let imagediv = document.getElementById('images');
+            console.log(JSON.stringify(data2[0])+'ja tämä')
+            for (let index = 0; index < data2.length; index++) {
+                var img = document.createElement('img');
+                img.src = 'data:image/png;base64,'+data2[index];
+                imagediv.appendChild(img);
+                
+            }
+
         })
     })
 

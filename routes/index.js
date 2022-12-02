@@ -39,9 +39,18 @@ router.get('/diets/', function(req,res,next) {
 })
 
 router.get('/images/:imageId', function(req,res,next) {
-  imageIDs = req.id;
-  res.json(imageIDs);
-
+  
+  async function findImages() {
+  imageIDs = [req.params.imageId];
+  
+  const imageArray = await Image.find().where('_id').in(imageIDs).exec();  // Help from: https://stackoverflow.com/questions/8303900/mongodb-mongoose-findmany-find-all-documents-with-ids-listed-in-array
+  const bufferArray = [];
+  for (let index = 0; index < imageArray.length; index++) {
+    bufferArray.push(new Buffer.from(imageArray[index].buffer).toString('base64'))
+  }
+  res.json(bufferArray);
+}
+findImages();
 })
 
 router.post('/recipe/', function(req,res,next) {
