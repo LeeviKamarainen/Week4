@@ -12,14 +12,17 @@ if(document.readyState !== "loading"){
 function initializeCode() {
     console.log('Script loaded!')
     addRecipe();
+    addCategories();
     let searchField = document.getElementById('search');
-    searchField.addEventListener("keyup", function() {
-        if (event.keyCode === 13) {
+    searchField.addEventListener("keyup", function(event) {
+        if (event.key === 'Enter') {
             let searchText = searchField.value;
             getRecipe(searchText)
         }
-    })
-    addCategories()
+    });
+
+    
+
 
 
 function addCategories() {

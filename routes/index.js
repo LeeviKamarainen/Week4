@@ -77,7 +77,6 @@ router.post('/recipe/', function(req,res,next) {
 })
 
 router.post('/images',upload.array('images',12), function(req,res,next) {
-  console.log(req.files)
   imgdata = req.files[0];
   if(req.files[0] != undefined) {
   new Image({
@@ -88,7 +87,6 @@ router.post('/images',upload.array('images',12), function(req,res,next) {
 
   }).save((err, image) => {
     if(err) return next(err);
-    console.log({id: image._id})
     res.json({id: image._id});
   })
 }
