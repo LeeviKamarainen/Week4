@@ -89,7 +89,7 @@ function getRecipe(name) {
         console.log(imageIDs)
         fetch('http://localhost:3000/images/'+imageIDs, {
             headers: {
-                'Content-type': 'multipart/form-data',
+                'Content-type': 'image/jpeg',
                 'Content-Disposition': 'inline'
             },
         })
