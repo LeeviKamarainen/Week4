@@ -39,7 +39,8 @@ router.get('/diets/', function(req,res,next) {
 })
 
 router.get('/images/:imageId', function(req,res,next) {
-  
+  res.setHeader('Content-Disposition','inline');
+  res.setHeader('Content-Type','image/jpeg');
   async function findImages() {
   imageIDs = [req.params.imageId];
   
